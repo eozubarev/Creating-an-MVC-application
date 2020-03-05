@@ -11,6 +11,26 @@
   
 </head>
 <body>
+	
+<?php
+require('connect.php');
+
+if (isset($_POST['username']) && isset($_POST['password'])){
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  $query = "INSERT INTO users (username, password, email) VALUES ('username', '$email', 'password')";
+  $result= mysqli_query($connection, $query);
+
+  if($result){
+    $smsg = "Регистрация прошла успешно";
+  } else {
+    $fmsg = "Ошибка";
+  }
+  }
+
+?>
 
 	<header></header>
 
@@ -27,7 +47,16 @@
             <div class="account-wall">
                 <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
                     alt="">
-                <form class="form-signin">
+                <form class="form-signin" method="POST">
+			<?php if(isset($smsg)){ 
+     echo "<div class=\'alert alert-success\' role=\'alert\'>". $smsg. "</div>";
+}
+?>
+
+                <?php if(isset($fmsg)){ 
+     echo "<div class=\'alert alert-danger\' role=\'alert\'>". $fmsg. "</div>";
+}
+?>
                 <input type="text" class="form-control" placeholder="Email" required autofocus>
                 <input type="password" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
